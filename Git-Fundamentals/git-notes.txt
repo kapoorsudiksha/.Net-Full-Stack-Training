@@ -1,0 +1,126 @@
+
+
+	git config --global user.name "kapoorsudiksha"
+	
+	git config --global user.email "sudiksha.kapoor.001@gmail.com"
+
+	git config --global core.editor "code --wait"
+
+	git config --global -e
+	
+	----------------------------------------
+
+	mkdir demo
+	cd demo
+	
+	-- Created some sample files..
+
+	git init
+	
+	git status
+	
+	git add .
+	
+	git commit -m "First Commit"
+	
+	git remote add origin https://github.com/kapoorsudiksha/demo.git
+	
+	git push -u origin master
+	
+	-----------------------------------
+	
+	mkdir logs
+	
+	echo hello > logs/dev.log
+	
+	git status
+	
+	echo logs/ > .gitignore
+	
+	code .
+	
+	git status
+	
+	git add .gitignore
+	
+	git commit -m "Adding gitignore"
+	
+	git push -u origin master
+	
+	-- Verify the central repository now.
+	
+	-----------------------------------
+	
+	
+	-- To get the commit history:
+	
+		git log
+		
+	-- To view the short summary of recent commits:
+	
+		git log --oneline
+		
+	-- To view the commit history in reverse order:
+	
+		git log --oneline --reverse
+	
+	-----------------------------------
+	
+	-- To get the status of the staging area and working directory:
+	
+		git status
+		
+	-- To get the short status of the staging area and working directory:
+	
+		git status
+	
+	-----------------------------------
+	
+	-- To create branch
+	
+		git branch development
+		
+	-- To get the list of branches:
+	
+		git branch
+		
+	-- To verify in which branch we are:
+	
+		git branch
+		
+		git status
+		
+	-- To checkout any other branch
+	
+		git checkout development
+		
+	-- Now, Modify the repository, stage the changes and Commit 
+	-- Make sure the commit should happen in new branch i.e. development
+	
+	-- To merge the development branch with master:
+	
+	-- Checkout to master branch:
+	
+		git checkout master
+		
+	-- Merge:
+	
+		git merge development
+		
+	-- Commit and push the changes
+	
+	-- Verify the central repository:
+	
+	-----------------------------------
+	
+	-- To get the list of files and folders from staging area:
+	
+		git ls-files
+	
+	-----------------------------------
+	
+	git add fileOne.txt
+	git add .
+	git add *.txt
+	
+	------------------------------------
