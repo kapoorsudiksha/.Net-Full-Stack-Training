@@ -24,6 +24,8 @@ Stack
 	
 /* ***************************************************** */
 
+// Stack and Heap Memory:
+
 using System.Collections;
 using System.Text;
 
@@ -68,3 +70,217 @@ namespace coreConsoleBasicApp
         }
     }
 }
+
+/* ***************************************************** */
+
+// Checked and Unchecked Keywords:
+
+	- In C#, we can manage memory through Managed and Unmanaged Code.
+	- .NET Runtime Garbage Collector (GC) helps to manage memory for managed code (objects).
+	- To manage the code, we use checked or unchecked keyword (context) are used to control whether ooberflow checked performed or not.
+	
+	Checked Context - Enables Overflow Checking
+	Unchecked Context - Disables Overflow Checking
+	
+/* ***************************************************** */	
+	
+// Checked Keyword (Context):
+
+using System.Collections;
+using System.Text;
+
+namespace coreConsoleBasicApp
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int balance = 2_000_000_000;    // 2 Billion
+            int deposit = 1_000_000_000;    //  1 Billion
+
+            try
+            {
+                int newBalance = checked(balance + deposit);
+                Console.WriteLine($"New Balance: {newBalance}");
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine("Overflow Exception Detected: " + ex.Message);
+            }
+            
+
+            // Console.WriteLine(int.MaxValue);    // 2147483647
+            Console.ReadKey();
+        }
+    }
+}
+
+/* ***************************************************** */	
+
+// Unchecked Keyword (Context):
+
+using System.Collections;
+using System.Text;
+
+namespace coreConsoleBasicApp
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int balance = 2_000_000_000;    // 2 Billion
+            int deposit = 1_000_000_000;    //  1 Billion
+
+            try
+            {
+                int newBalance = unchecked(balance + deposit);
+                Console.WriteLine($"New Balance: {newBalance}");
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine("Overflow Exception Detected: " + ex.Message);
+            }
+            
+
+            // Console.WriteLine(int.MaxValue);    // 2147483647
+            Console.ReadKey();
+        }
+    }
+}
+
+/* ***************************************************** */
+
+Generation 0
+
+	- Short-Lived Objects
+	- Frequent Collection
+	- Efficient - Collection process is fast because it takes only a small portion of heap.
+	- Example: Small Objects, Objects that are used in methods, Temporary Variables
+
+Generation 1
+
+	- Buffer Generation - Servers a buffer b/w SL objects in Gen 0 and long lived objets in Gen 2.
+	-Intermdiate Lifetime - Gen 1 is collected less frequently than Gen 0.
+	- Examples, Objects that survive GC cycles but are not used for application lifetime.
+
+Generation 2
+
+	- Long lived objects
+	- Least Frequently collected.
+	- Examples, Static objects, objetcs tied to the application lifecycles
+
+/* ***************************************************** */
+
+// How GC cleans up the memory using IDisposable
+
+using System.Collections;
+using System.Text;
+
+namespace coreConsoleBasicApp
+{
+    public class ClassA : IDisposable
+    {
+        // To detect the redundent calls
+        private bool disposedValue = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed objects
+                }
+                // free unmanaged resources and override a finalizer
+                // set larget fields to null
+                disposedValue = true;
+            }
+        }
+
+        ~ClassA() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+    }
+    public class ClassB 
+    {
+        // To detect the redundent calls
+        private bool disposedValue = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed objects
+                }
+                // free unmanaged resources and override a finalizer
+                // set larget fields to null
+                disposedValue = true;
+            }
+        }
+
+        ~ClassB() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+    }
+    public class ClassC 
+    {
+        // To detect the redundent calls
+        private bool disposedValue = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed objects
+                }
+                // free unmanaged resources and override a finalizer
+                // set larget fields to null
+                disposedValue = true;
+            }
+        }
+
+        ~ClassC() { Dispose(false); }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            for(int i = 0; i <= 1000000;i++)
+            {
+                ClassA classA = new ClassA();
+                classA.Dispose();
+                ClassB classB = new ClassB();
+                classB.Dispose();
+                ClassC classC = new ClassC();
+                classC.Dispose();
+            }
+
+            Console.ReadKey();
+        }
+    }
+}
+
+/* ***************************************************** */
+
+
+
+
+
+
+
