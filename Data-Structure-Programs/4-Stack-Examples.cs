@@ -212,7 +212,9 @@ namespace coreConsoleBasicApp
             return new string(reversedArray);
         }
     }
-} 
+}
+
+ 
 
 
 
