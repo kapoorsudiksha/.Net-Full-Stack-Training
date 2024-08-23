@@ -176,3 +176,28 @@ SELECT *
 -- IN - checks if a value is in a set of values.
 -- ALL - checks if value is greater than, less thaor or otherwise satisfied a condition compared to all the values.
 -- ANY - checks if a value is greater than, less than or otherwise satisfied a condition compared to all the values.
+
+-- JOIN vs. Subquery
+
+-- Retrieve employees whose salary is greater than the average salary in their own department.
+
+	SELECT EmpName, Salary, DeptId
+	FROM Employees e1
+	WHERE Salary > (SELECT AVG(Salary) FROM Employees e2 WHERE e2.DeptId = e1.DeptId)
+
+	SELECT EmpName, Salary, E1.DeptId
+	FROM Employees e1
+	JOIN (SELECT deptid, AVG(Salary) AVGSalary
+	FROM Employees
+	group by DeptId) e2 
+	ON E1.DeptId = E2.DeptId
+	WHERE E1.Salary > E2.AVGSalary
+
+-- Calculations are not required (Joins are best)
+
+	SELECT e.EmpName, d.DeptName
+	FROM employees e JOIN departments d
+	ON e.DeptId = d.DeptId
+
+	SELECT EmpName, (select DeptName from Departments d where d.deptid = e.deptid)
+	from Employees e;
